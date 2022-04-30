@@ -1,0 +1,34 @@
+class Solution {
+    public int numSubarraysWithSum(int[] nums, int goal) {
+        int size = nums.length,ans=0;
+        if(goal==0){
+            int fib[]=new int[size+1];
+            for(int i=1;i<=size;i++){
+                fib[i]=i+fib[i-1];
+            }
+            int pt1=0;
+            while(pt1<size){
+                int count=0;
+                while(pt1<size && nums[pt1]!=1){count++;pt1++;}
+                ans+=fib[count];pt1++;
+            }
+            return ans;
+        }
+        int pt1=0,pt2=0,sum=0;
+        while(pt2<size){
+            sum+=nums[pt2];
+            if(sum==goal){
+                int count=1;
+                while(pt1<=pt2 && nums[pt1]==0) {count++;pt1++;}
+                pt2++;
+                while(pt2<size && nums[pt2]==0){ ans+=count;pt2++;}
+                ans+=count;
+                if(pt1<size && nums[pt1]==1){sum--; pt1++;}
+                if(pt2>=size) break;
+                continue;
+            }
+            pt2++;
+        }
+        return ans;
+    }
+}
